@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('transactions', function (Blueprint $table) {
+        Schema::create('goals', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('category');
-            $table->decimal('amount', 12, 2);
-            $table->string('type')->default('expense');
-            $table->string('note')->nullable();
-            $table->date('date');
+            $table->string('title');
+            $table->decimal('target_amount',12,2);
+            $table->decimal('current_amount',12,2);
+            $table->dateTime('deadline');
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('transactions');
+        Schema::dropIfExists('goals');
     }
 };
