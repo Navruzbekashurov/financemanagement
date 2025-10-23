@@ -30,27 +30,19 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $request->validate([
+        $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
 
-        $user = User::where('email', $request->email)->first();
-
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            throw ValidationException::withMessages([
-                'email' => ['Error'],
-            ]);
-        }
-
-        $token = $user->createToken('auth_token')->plainTextToken;
+        $token = $this->authService->login($credentials['email'], $credentials['password']);
 
         return response()->json([
-            'access_token' => $token,
-            'token_type' => 'Bearer',
-            'user' => $user,
+            'token' => $token,
+            'user'  => User::where('email', $credentials['email'])->first(),
         ]);
     }
+
 
     public function logout(Request $request)
     {
