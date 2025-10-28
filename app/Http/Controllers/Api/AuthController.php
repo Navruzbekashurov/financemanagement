@@ -86,7 +86,7 @@ class AuthController extends Controller
             ]);
         } catch (\Exception $e) {
             return response()->json([
-                'error' => 'Google Auth xatosi',
+                'error' => 'Google Auth error',
                 'message' => $e->getMessage()
             ], 500);
         }
