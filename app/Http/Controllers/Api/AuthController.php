@@ -12,7 +12,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use Illuminate\Validation\ValidationException;
 use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
@@ -65,29 +64,31 @@ class AuthController extends Controller
         return response()->json(['url' => $url]);
     }
 
-    public function handleGoogleCallback(Request $request)
+    public function handleGoogleCallback()
     {
-        $token = $request->input('token');
+        try {
+            $googleUser = Socialite::driver('google')->stateless()->user();
 
-        $googleUser = Socialite::driver('google')->stateless()->userFromToken($token);
+            $user = User::updateOrCreate(
+                ['email' => $googleUser->getEmail()],
+                [
+                    'name' => $googleUser->getName(),
+                    'google_id' => $googleUser->getId(),
+                    'avatar' => $googleUser->getAvatar(),
+                ]
+            );
 
-        $user = User::updateOrCreate(
-            ['google_id' => $googleUser->id],
-            [
-                'name' => $googleUser->name,
-                'email' => $googleUser->email,
-                'password' => bcrypt(Str::random(16)),
-                'email_verified_at' => now()
-            ]
-        );
+            Auth::login($user);
 
-        Auth::login($user);
-        $token = $user->createToken('auth_token')->plainTextToken;
-
-        return response()->json([
-            'message' => 'Google orqali tizimga kirdingiz!',
-            'user' => $user,
-            'token' => $token
-        ]);
+            return response()->json([
+                'token' => $user->createToken('api')->plainTextToken,
+                'user' => $user
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Google Auth xatosi',
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
 }
