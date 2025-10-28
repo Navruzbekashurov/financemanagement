@@ -9,8 +9,11 @@ use App\Http\Resources\AuthResource;
 use App\Models\User;
 use App\Services\AuthService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
 {
@@ -56,8 +59,35 @@ class AuthController extends Controller
         return response()->json($request->user());
     }
 
-    public function googleLogin(Request $request)
+    public function getGoogleAuthUrl()
     {
-        return response()->json(['message' => 'Google login hali qo‘shilmagan.']);
+        $url = Socialite::driver('google')->stateless()->redirect()->getTargetUrl();
+        return response()->json(['url' => $url]);
+    }
+
+    public function handleGoogleCallback(Request $request)
+    {
+        $token = $request->input('token');
+
+        $googleUser = Socialite::driver('google')->stateless()->userFromToken($token);
+
+        $user = User::updateOrCreate(
+            ['google_id' => $googleUser->id],
+            [
+                'name' => $googleUser->name,
+                'email' => $googleUser->email,
+                'password' => bcrypt(Str::random(16)),
+                'email_verified_at' => now()
+            ]
+        );
+
+        Auth::login($user);
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return response()->json([
+            'message' => 'Google orqali tizimga kirdingiz!',
+            'user' => $user,
+            'token' => $token
+        ]);
     }
 }
