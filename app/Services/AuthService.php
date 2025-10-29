@@ -29,7 +29,7 @@ class AuthService
 
         if (! $user || ! Hash::check($password, $user->password)) {
             throw ValidationException::withMessages([
-                'email' => ['Email yoki parol noto‘g‘ri.'],
+                'email' => ['Email or password wrong.'],
             ]);
         }
 

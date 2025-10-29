@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('password')->nullable()->change();
+            $table->string('password')->nullable();
             $table->string('timezone')->default('Asia/Tashkent');
             $table->string('preferred_language',10)->default('uz');
             $table->rememberToken();
