@@ -23,6 +23,7 @@ class TransactionRequest extends FormRequest
     {
         return [
             'user_id' => 'required|exists:users,id',
+            'goal_id' => 'nullable|exists:goals,id',
             'category' => 'required|string|max:255',
             'amount' => 'required|numeric|min:0',
             'type' => 'required|in:expense,income',

@@ -17,22 +17,22 @@ class StoreGoalDto
     public static function fromRequest(Request $request): self
     {
         return new self(
-            title: $request->input('title'),
-            target_amount: $request->input('target_amount'),
-            current_amount: $request->input('current_amount'),
-            deadline: $request->input('deadline'),
-            is_active: $request->input('is_active', true)
+            $request->input('title'),
+            $request->input('target_amount'),
+            $request->input('current_amount'),
+            $request->input('deadline'),
+            $request->input('is_active', true)
         );
     }
 
-    public function toArray(): array
-    {
-        return [
-            'title'          => $this->title,
-            'target_amount'  => $this->target_amount,
-            'current_amount' => $this->current_amount,
-            'deadline'       => $this->deadline,
-            'is_active'      => $this->is_active,
-        ];
-    }
+//    public function toArray(): array
+//    {
+//        return [
+//            'title'          => $this->title,
+//            'target_amount'  => $this->target_amount,
+//            'current_amount' => $this->current_amount,
+//            'deadline'       => $this->deadline,
+//            'is_active'      => $this->is_active,
+//        ];
+//    }
 }

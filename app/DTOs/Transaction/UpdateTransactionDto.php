@@ -7,6 +7,7 @@ use App\Http\Requests\Transaction\UpdateTransactionRequest;
 class UpdateTransactionDto
 {
     public function __construct(
+        public ?int $goal_id,
         public string $category,
         public float $amount,
         public string $type,
@@ -19,6 +20,7 @@ class UpdateTransactionDto
         $validated = $request->validated();
 
         return new self(
+            $validated['goal_id']?? null,
             $validated['category'],
             $validated['amount'],
             $validated['type'],

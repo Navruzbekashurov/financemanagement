@@ -14,6 +14,7 @@ class UpdateTransactionRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'goal_id' => 'nullable|exists:goals,id',
             'category' => 'required|string|max:255',
             'amount' => 'required|numeric|min:0',
             'type' => 'required|in:expense,income',

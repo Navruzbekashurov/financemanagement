@@ -14,7 +14,7 @@ class GoalService
     public function store(StoreGoalDto $dto, User $user): Goal
     {
         return Goal::create([
-            'user_id'        => $user->id,                // 🔥 foydalanuvchi ID sini qo‘shdik
+            'user_id'        => $user->id,
             'title'          => $dto->title,
             'target_amount'  => $dto->target_amount,
             'current_amount' => $dto->current_amount,

@@ -19,28 +19,32 @@ use OpenApi\Annotations as OA;
  *     description="Authenticated user's income and expense management"
  * )
  */
+
 /**
  * @OA\Schema(
  *     schema="TransactionRequest",
  *     required={"category", "amount", "type", "date"},
- *     @OA\Property(property="user_id", type="integer", example=1),
- *     @OA\Property(property="category", type="string", example="Food"),
- *     @OA\Property(property="amount", type="number", format="float", example=25.50),
- *     @OA\Property(property="type", type="string", enum={"income","expense"}, example="expense"),
- *     @OA\Property(property="note", type="string", nullable=true, example="Lunch payment"),
- *     @OA\Property(property="date", type="string", format="date", example="2025-10-29")
+ *     @OA\Property(property="user_id", type="integer", example=1, description="User ID (authenticated user)"),
+ *     @OA\Property(property="goal_id", type="integer", nullable=true, example=5, description="Related goal ID (optional)"),
+ *     @OA\Property(property="category", type="string", example="maqsad", description="Transaction category name"),
+ *     @OA\Property(property="amount", type="number", format="float", example=25.50, description="Transaction amount"),
+ *     @OA\Property(property="type", type="string", enum={"income","expense"}, example="expense", description="Transaction type"),
+ *     @OA\Property(property="note", type="string", nullable=true, example="Lunch payment", description="Additional note"),
+ *     @OA\Property(property="date", type="string", format="date", example="2025-10-29", description="Transaction date")
  * )
  *
  * @OA\Schema(
  *     schema="UpdateTransactionRequest",
  *     required={"category", "amount", "type", "date"},
- *     @OA\Property(property="category", type="string", example="Utilities"),
- *     @OA\Property(property="amount", type="number", format="float", example=45.00),
- *     @OA\Property(property="type", type="string", enum={"income","expense"}, example="expense"),
- *     @OA\Property(property="note", type="string", nullable=true, example="Electricity bill"),
- *     @OA\Property(property="date", type="string", format="date", example="2025-10-29")
+ *     @OA\Property(property="goal_id", type="integer", nullable=true, example=5, description="Related goal ID (optional)"),
+ *     @OA\Property(property="category", type="string", example="Utilities", description="Updated transaction category"),
+ *     @OA\Property(property="amount", type="number", format="float", example=45.00, description="Updated transaction amount"),
+ *     @OA\Property(property="type", type="string", enum={"income","expense"}, example="expense", description="Updated transaction type"),
+ *     @OA\Property(property="note", type="string", nullable=true, example="Electricity bill", description="Updated note"),
+ *     @OA\Property(property="date", type="string", format="date", example="2025-10-29", description="Updated transaction date")
  * )
  */
+
 class TransactionApiController extends Controller
 {
     public function __construct(protected TransactionService $transactionService) {}

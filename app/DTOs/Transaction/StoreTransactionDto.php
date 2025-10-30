@@ -8,6 +8,7 @@ class StoreTransactionDto
 {
     public function __construct(
         public int $user_id,
+        public ?int $goal_id,
         public string $category,
         public float $amount,
         public string $type,
@@ -21,6 +22,7 @@ class StoreTransactionDto
 
         return new self(
             $validated['user_id'],
+            $validated['goal_id'] ?? null,
             $validated['category'],
             $validated['amount'],
             $validated['type'],
@@ -33,6 +35,7 @@ class StoreTransactionDto
     {
         return [
             'user_id' => $this->user_id,
+            'goal_id'=>$this->goal_id,
             'category' => $this->category,
             'amount' => $this->amount,
             'type' => $this->type,
