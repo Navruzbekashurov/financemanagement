@@ -21,8 +21,8 @@ class Transaction extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function transactions()
+    public function goal()
     {
-        return $this->hasMany(Transaction::class);
+        return $this->belongsTo(Goal::class);
     }
 }

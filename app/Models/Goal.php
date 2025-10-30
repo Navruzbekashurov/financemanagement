@@ -6,8 +6,23 @@ use Illuminate\Database\Eloquent\Model;
 
 class Goal extends Model
 {
-    public function goal()
+    protected $fillable = [
+        'user_id',
+        'title',
+        'target_amount',
+        'current_amount',
+        'deadline',
+        'is_active',
+    ];
+
+    public function user()
     {
-        return $this->belongsTo(Goal::class);
+        return $this->belongsTo(User::class);
+    }
+
+
+    public function transaction()
+    {
+        return $this->hasMany(Transaction::class);
     }
 }
