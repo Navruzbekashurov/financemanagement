@@ -31,7 +31,7 @@ class StoreTransactionRequest extends FormRequest
 
             // Polymorphic fields
             'entity_id' => ['nullable', 'integer'],
-            'entity_type' => ['nullable', 'string', 'in:App\Models\Goal,App\Models\Debet'],
+            'entity_type' => ['nullable', 'string', 'in:App\Models\Goal,App\Models\Debt'],
 
         ];
     }
