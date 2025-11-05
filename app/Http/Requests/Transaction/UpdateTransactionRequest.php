@@ -20,7 +20,7 @@ class UpdateTransactionRequest extends FormRequest
             'note' => ['sometimes', 'string', 'max:255'],
             'date' => ['sometimes', 'date'],
             'entity_id' => ['nullable', 'integer'],
-            'entity_type' => ['nullable', 'string', 'in:App\Models\Goal,App\Models\Debet'],
+            'entity_type' => ['nullable', 'string', 'in:App\Models\Goal,App\Models\Debt'],
         ];
     }
 }
