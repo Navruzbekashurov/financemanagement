@@ -1,18 +1,18 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-class Transaction extends Model
+
+class
+Debt extends Model
 {
     protected $fillable = [
         'user_id',
+        'creditor',
         'amount',
-        'type',
-        'note',
-        'date',
-        'entity_id',
-        'entity_type',
+        'due_date',
+        'is_active',
+        'category_id',
     ];
 
     public function user()
@@ -20,14 +20,15 @@ class Transaction extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function entity()
+    // Debetga tegishli transactionlar
+    public function transactions()
     {
-        return $this->morphTo();
+        return $this->morphMany(Transaction::class, 'entity');
     }
 
+    // Debetga tegishli category
     public function category()
     {
         return $this->belongsTo(Category::class);
     }
 }
-

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Transaction;
+namespace App\Http\Requests\Category;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class TransactionRequest extends FormRequest
+class UpdateCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,13 +22,9 @@ class TransactionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'required|exists:users,id',
-            'goal_id' => 'nullable|exists:goals,id',
-            'category' => 'required|string|max:255',
-            'amount' => 'required|numeric|min:0',
-            'type' => 'required|in:expense,income',
-            'note' => 'nullable|string|max:500',
-            'date' => 'required|date',
+            'name' => ['sometimes', 'string', 'max:255'],
+            'type' => ['sometimes', 'in:income,expense'],
+            'is_active' => ['sometimes', 'boolean'],
         ];
     }
 }

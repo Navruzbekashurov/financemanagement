@@ -14,12 +14,13 @@ class UpdateTransactionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'goal_id' => 'nullable|exists:goals,id',
-            'category' => 'required|string|max:255',
-            'amount' => 'required|numeric|min:0',
-            'type' => 'required|in:expense,income',
-            'note' => 'nullable|string|max:500',
-            'date' => 'required|date',
+            'category_id' => ['nullable', 'exists:categories,id'],
+            'amount' => ['sometimes', 'numeric', 'min:0'],
+            'type' => ['sometimes', 'in:income,expense'],
+            'note' => ['sometimes', 'string', 'max:255'],
+            'date' => ['sometimes', 'date'],
+            'entity_id' => ['nullable', 'integer'],
+            'entity_type' => ['nullable', 'string', 'in:App\Models\Goal,App\Models\Debet'],
         ];
     }
 }

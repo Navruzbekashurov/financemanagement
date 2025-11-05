@@ -1,8 +1,8 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+
 
 class Goal extends Model
 {
@@ -13,6 +13,7 @@ class Goal extends Model
         'current_amount',
         'deadline',
         'is_active',
+        'category_id', // default category
     ];
 
     public function user()
@@ -20,9 +21,17 @@ class Goal extends Model
         return $this->belongsTo(User::class);
     }
 
-
-    public function transaction()
+    // Har bir goal uchun transactionlar
+    public function transactions()
     {
-        return $this->hasMany(Transaction::class);
+        return $this->morphMany(Transaction::class, 'entity');
+    }
+
+    // Goalga tegishli category
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 }
+
+

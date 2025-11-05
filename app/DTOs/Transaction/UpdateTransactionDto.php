@@ -2,41 +2,30 @@
 
 namespace App\DTOs\Transaction;
 
-use App\Http\Requests\Transaction\UpdateTransactionRequest;
+use Illuminate\Http\Request;
 
 class UpdateTransactionDto
 {
     public function __construct(
-        public ?int $goal_id,
-        public string $category,
-        public float $amount,
-        public string $type,
-        public ?string $note,
-        public string $date,
+        public ?int $category_id = null,
+        public ?float $amount = null,
+        public ?string $type = null,
+        public ?string $note = null,
+        public ?string $date = null,
+        public ?int $entity_id = null,
+        public ?string $entity_type = null
     ) {}
 
-    public static function fromRequest(UpdateTransactionRequest $request): self
+    public static function fromRequest(Request $request): self
     {
-        $validated = $request->validated();
-
         return new self(
-            $validated['goal_id']?? null,
-            $validated['category'],
-            $validated['amount'],
-            $validated['type'],
-            $validated['note'] ?? null,
-            $validated['date'],
+            category_id: $request->input('category_id'),
+            amount: $request->input('amount'),
+            type: $request->input('type'),
+            note: $request->input('note'),
+            date: $request->input('date'),
+            entity_id: $request->input('entity_id'),
+            entity_type: $request->input('entity_type')
         );
-    }
-
-    public function toArray(): array
-    {
-        return [
-            'category' => $this->category,
-            'amount' => $this->amount,
-            'type' => $this->type,
-            'note' => $this->note,
-            'date' => $this->date,
-        ];
     }
 }

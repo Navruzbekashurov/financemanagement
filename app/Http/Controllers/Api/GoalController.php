@@ -2,115 +2,46 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\DTOs\Goal\StoreGoalDto;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Goal\GoalRequest;
-use App\Http\Resources\GoalResource;
 use App\Models\Goal;
+use App\Http\Requests\Goal\StoreGoalRequest;
+use App\Http\Requests\Goal\UpdateGoalRequest;
+use App\DTOs\Goal\StoreGoalDto;
+use App\DTOs\Goal\UpdateGoalDto;
 use App\Services\GoalService;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use OpenApi\Annotations as OA;
+use Illuminate\Http\JsonResponse;
 
 class GoalController extends Controller
 {
-    public function __construct(protected GoalService $goalService)
+    public function __construct(protected GoalService $goalService) {}
+
+    public function index(): JsonResponse
     {
+        return response()->json(Goal::with('category')->latest()->get());
     }
 
-    /**
-     * @OA\Get(
-     *     path="/api/goals",
-     *     summary="Foydalanuvchining barcha maqsadlarini olish",
-     *     tags={"Goals"},
-     *     @OA\Response(response=200, description="Success", @OA\JsonContent(ref="#/components/schemas/GoalResource"))
-     * )
-     */
-    public function index(Request $request): AnonymousResourceCollection
-    {
-        $goals = Goal::where('user_id', $request->user()->id)
-            ->latest()
-            ->get();
-
-        return GoalResource::collection($goals);
-    }
-
-    /**
-     * @OA\Post(
-     *     path="/api/goals",
-     *     summary="Yangi maqsad yaratish",
-     *     tags={"Goals"},
-     *     @OA\RequestBody(
-     *         required=true,
-     *         @OA\JsonContent(ref="#/components/schemas/GoalResource")
-     *     ),
-     *     @OA\Response(response=201, description="Goal created", @OA\JsonContent(ref="#/components/schemas/GoalResource"))
-     * )
-     */
-    public function store(GoalRequest $request)
+    public function store(StoreGoalRequest $request): JsonResponse
     {
         $dto = StoreGoalDto::fromRequest($request);
-        $goal = $this->goalService->store($dto, Auth::user());
-
-        return (new GoalResource($goal))
-            ->additional(['message' => 'Goal created'])
-            ->response()
-            ->setStatusCode(201);
+        $goal = $this->goalService->create($dto);
+        return response()->json($goal, 201);
     }
 
-    /**
-     * @OA\Get(
-     *     path="/api/goals/{id}",
-     *     summary="Bitta maqsadni ko‘rish",
-     *     tags={"Goals"},
-     *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
-     *     @OA\Response(response=200, description="Success", @OA\JsonContent(ref="#/components/schemas/GoalResource"))
-     * )
-     */
-    public function show(Goal $goal): GoalResource
+    public function show(Goal $goal): JsonResponse
     {
-        // $this->authorize('view', $goal);
-        return new GoalResource($goal);
+        return response()->json($goal->load('category'));
     }
 
-    /**
-     * @OA\Put(
-     *     path="/api/goals/{id}",
-     *     summary="Maqsadni yangilash",
-     *     tags={"Goals"},
-     *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
-     *     @OA\RequestBody(
-     *         required=true,
-     *         @OA\JsonContent(ref="#/components/schemas/GoalResource")
-     *     ),
-     *     @OA\Response(response=200, description="Goal updated", @OA\JsonContent(ref="#/components/schemas/GoalResource"))
-     * )
-     */
-    public function update(GoalRequest $request, Goal $goal)
+    public function update(UpdateGoalRequest $request, Goal $goal): JsonResponse
     {
-        // $this->authorize('update', $goal);
-        $dto = StoreGoalDto::fromRequest($request);
-        $goal = $this->goalService->update($goal, $dto);
-
-        return (new GoalResource($goal))
-            ->additional(['message' => 'Goal updated']);
+        $dto = UpdateGoalDto::fromRequest($request);
+        $updated = $this->goalService->update($goal, $dto);
+        return response()->json($updated);
     }
 
-    /**
-     * @OA\Delete(
-     *     path="/api/goals/{id}",
-     *     summary="Maqsadni o‘chirish",
-     *     tags={"Goals"},
-     *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
-     *     @OA\Response(response=200, description="Goal deleted")
-     * )
-     */
-    public function destroy(Goal $goal)
+    public function destroy(Goal $goal): JsonResponse
     {
-        // $this->authorize('delete', $goal);
         $goal->delete();
-
-        return response()->json(['message' => 'Goal deleted']);
+        return response()->json(['message' => 'Goal deleted successfully']);
     }
 }

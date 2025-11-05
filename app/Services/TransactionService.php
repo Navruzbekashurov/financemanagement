@@ -2,25 +2,46 @@
 
 namespace App\Services;
 
+use App\Models\Transaction;
 use App\DTOs\Transaction\StoreTransactionDto;
 use App\DTOs\Transaction\UpdateTransactionDto;
-use App\Models\Transaction;
-use App\Models\User;
 
 class TransactionService
 {
-    public function store(StoreTransactionDto $dto, User $user): Transaction
+    public function create(StoreTransactionDto $dto): Transaction
     {
-        $data = $dto->toArray();
-        $data['user_id'] = $user->id;
+        $transaction = new Transaction([
+            'user_id' => $dto->user_id,
+            'amount' => $dto->amount,
+            'type' => $dto->type,
+            'note' => $dto->note,
+            'date' => $dto->date,
+        ]);
 
-        return Transaction::create($data);
+        if ($dto->entity) {
+            $transaction->entity()->associate($dto->entity);
+        }
+
+        $transaction->save();
+
+        return $transaction;
     }
 
     public function update(Transaction $transaction, UpdateTransactionDto $dto): Transaction
     {
-        $transaction->update($dto->toArray());
-        return $transaction->fresh();
-    }
+        $transaction->fill([
+            'amount' => $dto->amount,
+            'type' => $dto->type,
+            'note' => $dto->note,
+            'date' => $dto->date,
+        ]);
 
+        if ($dto->entity) {
+            $transaction->entity()->associate($dto->entity);
+        }
+
+        $transaction->save();
+
+        return $transaction;
+    }
 }

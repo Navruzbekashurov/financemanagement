@@ -15,18 +15,20 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('goal_id')->nullable()->constrained()->nullOnDelete();
-            $table->string('category');
-            $table->decimal('amount', 12, 2);
-            $table->string('type')->default('expense');
+            $table->decimal('amount',12,2);
+            $table->enum('type',['income','expense'])->default('expense');
             $table->string('note')->nullable();
             $table->date('date');
+
+            // Polymorphic category relation
+            $table->unsignedBigInteger('category_id')->nullable();
+            $table->string('category_type')->nullable();
+            $table->index(['category_id','category_type']);
+
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('transactions');

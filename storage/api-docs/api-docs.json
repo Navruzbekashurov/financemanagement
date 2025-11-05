@@ -170,6 +170,148 @@
                 }
             }
         },
+        "/api/goals": {
+            "get": {
+                "tags": [
+                    "Goals"
+                ],
+                "summary": "Foydalanuvchining barcha maqsadlarini olish",
+                "operationId": "88058068651db3e85fb1d15aedba880c",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GoalResource"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Goals"
+                ],
+                "summary": "Yangi maqsad yaratish",
+                "operationId": "f398c4e52ba126f80633b34d5cc23690",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/GoalResource"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Goal created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GoalResource"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/goals/{id}": {
+            "get": {
+                "tags": [
+                    "Goals"
+                ],
+                "summary": "Bitta maqsadni ko‘rish",
+                "operationId": "71fe9c301924fcf6a056b9f8adebfdfb",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GoalResource"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Goals"
+                ],
+                "summary": "Maqsadni yangilash",
+                "operationId": "8038939afa51735859d9313e9715c2d9",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/GoalResource"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Goal updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GoalResource"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Goals"
+                ],
+                "summary": "Maqsadni o‘chirish",
+                "operationId": "cce7ceea160eb8cdbc28e6c3e1adbf20",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Goal deleted"
+                    }
+                }
+            }
+        },
         "/api/auth/transactions": {
             "get": {
                 "tags": [
@@ -423,19 +565,29 @@
                 ],
                 "properties": {
                     "user_id": {
+                        "description": "User ID (authenticated user)",
                         "type": "integer",
                         "example": 1
                     },
+                    "goal_id": {
+                        "description": "Related goal ID (optional)",
+                        "type": "integer",
+                        "example": 5,
+                        "nullable": true
+                    },
                     "category": {
+                        "description": "Transaction category name",
                         "type": "string",
-                        "example": "Food"
+                        "example": "maqsad"
                     },
                     "amount": {
+                        "description": "Transaction amount",
                         "type": "number",
                         "format": "float",
                         "example": 25.5
                     },
                     "type": {
+                        "description": "Transaction type",
                         "type": "string",
                         "enum": [
                             "income",
@@ -444,11 +596,13 @@
                         "example": "expense"
                     },
                     "note": {
+                        "description": "Additional note",
                         "type": "string",
                         "example": "Lunch payment",
                         "nullable": true
                     },
                     "date": {
+                        "description": "Transaction date",
                         "type": "string",
                         "format": "date",
                         "example": "2025-10-29"
@@ -464,16 +618,25 @@
                     "date"
                 ],
                 "properties": {
+                    "goal_id": {
+                        "description": "Related goal ID (optional)",
+                        "type": "integer",
+                        "example": 5,
+                        "nullable": true
+                    },
                     "category": {
+                        "description": "Updated transaction category",
                         "type": "string",
                         "example": "Utilities"
                     },
                     "amount": {
+                        "description": "Updated transaction amount",
                         "type": "number",
                         "format": "float",
                         "example": 45
                     },
                     "type": {
+                        "description": "Updated transaction type",
                         "type": "string",
                         "enum": [
                             "income",
@@ -482,14 +645,77 @@
                         "example": "expense"
                     },
                     "note": {
+                        "description": "Updated note",
                         "type": "string",
                         "example": "Electricity bill",
                         "nullable": true
                     },
                     "date": {
+                        "description": "Updated transaction date",
                         "type": "string",
                         "format": "date",
                         "example": "2025-10-29"
+                    }
+                },
+                "type": "object"
+            },
+            "GoalResource": {
+                "title": "Goal Resource",
+                "description": "User goal (financial target) representation",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "title": {
+                        "type": "string",
+                        "example": "Uy uchun jamg‘arma"
+                    },
+                    "target_amount": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 10000
+                    },
+                    "current_amount": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 2500
+                    },
+                    "deadline": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2025-12-31"
+                    },
+                    "is_active": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "user": {
+                        "properties": {
+                            "id": {
+                                "type": "integer",
+                                "example": 3
+                            },
+                            "name": {
+                                "type": "string",
+                                "example": "Navruzbek Ashurov"
+                            },
+                            "email": {
+                                "type": "string",
+                                "example": "navruz@example.com"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-10-30 14:25:00"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-10-30 15:10:00"
                     }
                 },
                 "type": "object"
@@ -498,6 +724,10 @@
                 "title": "Transaction Resource",
                 "properties": {
                     "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "goal_id": {
                         "type": "integer",
                         "example": 1
                     },
@@ -539,6 +769,16 @@
                             }
                         },
                         "type": "object"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-10-29 12:45:30"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-10-29 12:50:10"
                     }
                 },
                 "type": "object"
@@ -549,6 +789,10 @@
         {
             "name": "Auth",
             "description": "Auth"
+        },
+        {
+            "name": "Goals",
+            "description": "Goals"
         },
         {
             "name": "Transactions",

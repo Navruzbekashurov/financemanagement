@@ -9,25 +9,22 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+        public function up(): void
     {
-        Schema::create('debets', function (Blueprint $table) {
+        Schema::create('debts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('category_id')->nullable()->constrained()->nullOnDelete();
             $table->string('creditor');
             $table->decimal('amount', 12, 2);
             $table->date('due_date')->nullable();
-            $table->boolean('is_status')->default(true);
-
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+        public function down(): void
     {
-        Schema::dropIfExists('debets');
+        Schema::dropIfExists('debts');
     }
 };

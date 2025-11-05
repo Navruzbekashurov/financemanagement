@@ -2,45 +2,32 @@
 
 namespace App\DTOs\Transaction;
 
-use App\Http\Requests\Transaction\TransactionRequest;
+use Illuminate\Http\Request;
 
 class StoreTransactionDto
 {
     public function __construct(
         public int $user_id,
-        public ?int $goal_id,
-        public string $category,
+        public ?int $category_id,
         public float $amount,
         public string $type,
         public ?string $note,
         public string $date,
+        public ?int $entity_id,
+        public ?string $entity_type
     ) {}
 
-    public static function fromRequest(TransactionRequest $request): self
+    public static function fromRequest(Request $request): self
     {
-        $validated = $request->validated();
-
         return new self(
-            $validated['user_id'],
-            $validated['goal_id'] ?? null,
-            $validated['category'],
-            $validated['amount'],
-            $validated['type'],
-            $validated['note'] ?? null,
-            $validated['date'],
+            user_id: $request->integer('user_id'),
+            category_id: $request->input('category_id'),
+            amount: $request->float('amount'),
+            type: $request->input('type', 'expense'),
+            note: $request->input('note'),
+            date: $request->input('date'),
+            entity_id: $request->input('entity_id'),
+            entity_type: $request->input('entity_type')
         );
-    }
-
-    public function toArray(): array
-    {
-        return [
-            'user_id' => $this->user_id,
-            'goal_id'=>$this->goal_id,
-            'category' => $this->category,
-            'amount' => $this->amount,
-            'type' => $this->type,
-            'note' => $this->note,
-            'date' => $this->date,
-        ];
     }
 }

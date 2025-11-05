@@ -2,38 +2,34 @@
 
 namespace App\Services;
 
-use App\DTOs\Goal\StoreGoalDto;
 use App\Models\Goal;
-use App\Models\User;
+use App\DTOs\Goal\StoreGoalDto;
+use App\DTOs\Goal\UpdateGoalDto;
 
 class GoalService
 {
-    /**
-     * Yangi maqsad yaratish
-     */
-    public function store(StoreGoalDto $dto, User $user): Goal
+    public function create(StoreGoalDto $dto): Goal
     {
         return Goal::create([
-            'user_id'        => $user->id,
-            'title'          => $dto->title,
-            'target_amount'  => $dto->target_amount,
-            'current_amount' => $dto->current_amount,
-            'deadline'       => $dto->deadline,
-            'is_active'      => $dto->is_active ?? true,
+            'user_id' => $dto->user_id,
+            'category_id' => $dto->category_id,
+            'title' => $dto->title,
+            'target_amount' => $dto->target_amount,
+            'current_amount' => $dto->current_amount ?? 0,
+            'deadline' => $dto->deadline,
+            'is_active' => $dto->is_active ?? true,
         ]);
     }
 
-    /**
-     * Maqsadni yangilash
-     */
-    public function update(Goal $goal, StoreGoalDto $dto): Goal
+    public function update(Goal $goal, UpdateGoalDto $dto): Goal
     {
         $goal->update([
-            'title'          => $dto->title,
-            'target_amount'  => $dto->target_amount,
+            'category_id' => $dto->category_id,
+            'title' => $dto->title,
+            'target_amount' => $dto->target_amount,
             'current_amount' => $dto->current_amount,
-            'deadline'       => $dto->deadline,
-            'is_active'      => $dto->is_active ?? $goal->is_active,
+            'deadline' => $dto->deadline,
+            'is_active' => $dto->is_active,
         ]);
 
         return $goal;

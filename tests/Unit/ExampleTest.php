@@ -6,11 +6,14 @@ use PHPUnit\Framework\TestCase;
 
 class ExampleTest extends TestCase
 {
-    /**
-     * A basic test example.
-     */
-    public function test_that_true_is_true(): void
+    public function test_sum_of_numbers()
     {
-        $this->assertTrue(true);
+        $result = 2 + 3;
+        $this->assertEquals(5, $result);
+    }
+
+    public function test_string_is_not_empty()
+    {
+        $this->assertNotEmpty("Navruz");
     }
 }
