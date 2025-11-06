@@ -21,6 +21,7 @@ class CategoryService
     public function update(Category $category, UpdateCategoryDto $dto): Category
     {
         $category->update([
+            'user_id' => $dto->user_id,
             'name' => $dto->name,
             'is_active' => $dto->is_active,
         ]);

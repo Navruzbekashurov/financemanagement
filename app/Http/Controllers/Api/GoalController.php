@@ -41,6 +41,8 @@ class GoalController extends Controller
     public function update(UpdateGoalRequest $request, Goal $goal): JsonResponse
     {
         $dto = UpdateGoalDto::fromRequest($request);
+        $dto->user_id = Auth::id();
+
         $updated = $this->goalService->update($goal, $dto);
         return response()->json($updated);
     }

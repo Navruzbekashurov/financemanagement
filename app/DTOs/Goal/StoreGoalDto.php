@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 class StoreGoalDto
 {
     public function __construct(
-        public int $user_id,
+        public ?int $user_id,
         public int $category_id,
         public string $title,
         public float $target_amount,

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 class UpdateDebtDto
 {
     public function __construct(
+        public ?int $user_id,
         public ?string $creditor = null,
         public ?float $amount = null,
         public ?string $due_date = null,
@@ -17,6 +18,7 @@ class UpdateDebtDto
     public static function fromRequest(Request $request): self
     {
         return new self(
+            user_id:$request->user()->id ?? null,
             creditor: $request->input('creditor'),
             amount: $request->input('amount'),
             due_date: $request->input('due_date'),

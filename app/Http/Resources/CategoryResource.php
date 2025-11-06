@@ -11,13 +11,11 @@ class CategoryResource extends JsonResource
     {
         return [
             'id'          => $this->id,
+            'user_id'     => $this->user_id,
             'name'        => $this->name,
-            'type'        => $this->type,
-            'entity_type' => $this->entity_type,
-            'entity_id'   => $this->entity_id,
             'is_active'   => (bool) $this->is_active,
-            'created_at'  => $this->created_at,
-            'updated_at'  => $this->updated_at,
+            'created_at'  => $this->created_at?->toDateTimeString(),
+            'updated_at'  => $this->updated_at?->toDateTimeString(),
         ];
     }
 }

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 class UpdateGoalDto
 {
     public function __construct(
+        public ?int $user_id,
         public ?int $category_id = null,
         public ?string $title = null,
         public ?float $target_amount = null,
@@ -18,6 +19,7 @@ class UpdateGoalDto
     public static function fromRequest(Request $request): self
     {
         return new self(
+            user_id:$request->user()->id ?? null,
             category_id: $request->input('category_id'),
             title: $request->input('title'),
             target_amount: $request->input('target_amount'),

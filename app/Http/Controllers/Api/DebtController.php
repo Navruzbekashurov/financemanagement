@@ -4,12 +4,13 @@ namespace App\Http\Controllers\Api;
 
 use App\DTOs\Debt\StoreDebtDto;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreDebtRequest;
-use App\Http\Requests\UpdateDebtRequest;
+use App\Http\Requests\Debt\StoreDebtRequest;
+use App\Http\Requests\Debt\UpdateDebtRequest;
 use App\Models\Debt;
 use App\DTOs\Debt\UpdateDebtDto;
 use App\Services\DebtService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 
 class DebtController extends Controller
 {
@@ -23,6 +24,8 @@ class DebtController extends Controller
     public function store(StoreDebtRequest $request): JsonResponse
     {
         $dto = StoreDebtDto::fromRequest($request);
+        $dto->user_id = Auth::id();
+
         $debet = $this->debetService->create($dto);
         return response()->json($debet, 201);
     }
@@ -32,10 +35,12 @@ class DebtController extends Controller
         return response()->json($debet->load('category'));
     }
 
-    public function update(UpdateDebtRequest $request, Debt $debet): JsonResponse
+    public function update(UpdateDebtRequest $request, Debt $debt): JsonResponse
     {
         $dto = UpdateDebtDto::fromRequest($request);
-        $updated = $this->debetService->update($debet, $dto);
+        $dto->user_id = Auth::id();
+
+        $updated = $this->debetService->update($debt, $dto);
         return response()->json($updated);
     }
 

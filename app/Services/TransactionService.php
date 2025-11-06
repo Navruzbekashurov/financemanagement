@@ -42,8 +42,20 @@ class TransactionService
             'date' => $dto->date,
         ]);
 
-        if ($dto->entity) {
-            $transaction->entity()->associate($dto->entity);
+        // Polimorfik entity bog'lash
+        if (!empty($dto->entity_id) && !empty($dto->entity_type)) {
+            $entityClass = $dto->entity_type; // App\Models\Goal yoki App\Models\Category
+            $entity = $entityClass::find($dto->entity_id);
+
+            if ($entity) {
+                $transaction->entity()->associate($entity);
+            } else {
+                // Entity topilmasa, bog'lanishni olib tashlash
+                $transaction->entity()->dissociate();
+            }
+        } elseif ($dto->entity_id === null && $dto->entity_type === null) {
+            // DTOda entity bo'lmasa, bog'lanishni olib tashlash
+            $transaction->entity()->dissociate();
         }
 
         $transaction->save();

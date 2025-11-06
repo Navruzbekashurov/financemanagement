@@ -35,6 +35,7 @@ class StoreTransactionRequest extends FormRequest
                 function ($attribute, $value, $fail) {
                     $allowedModels = [
                         \App\Models\Goal::class,
+                        \App\Models\Debt::class,
                         \App\Models\Category::class,
                         \App\Models\User::class,
                     ];

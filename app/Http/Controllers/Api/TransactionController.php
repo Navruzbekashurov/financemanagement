@@ -38,6 +38,9 @@ class TransactionController extends Controller
     public function update(UpdateTransactionRequest $request, Transaction $transaction): JsonResponse
     {
         $dto = UpdateTransactionDto::fromRequest($request);
+
+        $dto->user_id = Auth::id();
+
         $updated = $this->transactionService->update($transaction, $dto);
         return response()->json($updated);
     }

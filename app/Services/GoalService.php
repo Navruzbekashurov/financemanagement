@@ -24,12 +24,11 @@ class GoalService
     public function update(Goal $goal, UpdateGoalDto $dto): Goal
     {
         $goal->update([
-            'category_id' => $dto->category_id,
-            'title' => $dto->title,
+            'category_id' => $dto->category_id ?? $goal->category_id, 'title' => $dto->title,
             'target_amount' => $dto->target_amount,
             'current_amount' => $dto->current_amount,
             'deadline' => $dto->deadline,
-            'is_active' => $dto->is_active,
+            'is_active' => $dto->is_active ?? $goal->is_active,
         ]);
 
         return $goal;
