@@ -170,20 +170,335 @@
                 }
             }
         },
+        "/api/categories": {
+            "get": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Get all categories",
+                "operationId": "ac9c4d978ea4e5b72915ca9728e5b8b1",
+                "responses": {
+                    "200": {
+                        "description": "List of categories",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Category"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Create a new category",
+                "operationId": "cca49a87d9b0ebb9a98ad7c154b71737",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CategoryCreate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Category created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Category"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/categories/{id}": {
+            "get": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Get a single category",
+                "operationId": "09767bb2e47dde77dd1e2591428b0ae1",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Category details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Category"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Update a category",
+                "operationId": "7dcf71887e585de7f881e9eb98d86126",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CategoryUpdate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Updated category",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Category"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Delete a category",
+                "operationId": "9b61b65823f4a21f182506b34ddf805c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Category deleted",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Category deleted successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/debts": {
+            "get": {
+                "tags": [
+                    "Debts"
+                ],
+                "summary": "Get all debts",
+                "operationId": "db02cf9efab46d2448020de570b6b6b3",
+                "responses": {
+                    "200": {
+                        "description": "List of debts",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/DebtResource"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Debts"
+                ],
+                "summary": "Create a new debt",
+                "operationId": "500be8eb81582c5ff82fa5991dd6a9ee",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DebtCreate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Debt created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DebtResource"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/debts/{id}": {
+            "get": {
+                "tags": [
+                    "Debts"
+                ],
+                "summary": "Get a single debt",
+                "operationId": "54e929e2f8c9527dd45a75fddf38a2c5",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Debt details",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DebtResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Debt not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Debts"
+                ],
+                "summary": "Update a debt",
+                "operationId": "41869a7678b3b2bbd2c866142e9c5493",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DebtUpdate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Debt updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DebtResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Debt not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Debts"
+                ],
+                "summary": "Delete a debt",
+                "operationId": "f84f16bf8eaf35bced9b27b1c18232d4",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Debt deleted successfully"
+                    },
+                    "404": {
+                        "description": "Debt not found"
+                    }
+                }
+            }
+        },
         "/api/goals": {
             "get": {
                 "tags": [
                     "Goals"
                 ],
-                "summary": "Foydalanuvchining barcha maqsadlarini olish",
+                "summary": "List all goals",
                 "operationId": "88058068651db3e85fb1d15aedba880c",
                 "responses": {
                     "200": {
-                        "description": "Success",
+                        "description": "List of goals",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/GoalResource"
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/GoalResource"
+                                    }
                                 }
                             }
                         }
@@ -194,14 +509,14 @@
                 "tags": [
                     "Goals"
                 ],
-                "summary": "Yangi maqsad yaratish",
+                "summary": "Create a new goal",
                 "operationId": "f398c4e52ba126f80633b34d5cc23690",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/GoalResource"
+                                "$ref": "#/components/schemas/GoalCreate"
                             }
                         }
                     }
@@ -220,17 +535,18 @@
                 }
             }
         },
-        "/api/goals/{id}": {
+        "/api/goals/{goal}": {
             "get": {
                 "tags": [
                     "Goals"
                 ],
-                "summary": "Bitta maqsadni ko‘rish",
-                "operationId": "71fe9c301924fcf6a056b9f8adebfdfb",
+                "summary": "Get a single goal",
+                "operationId": "86bd9e91921ff24f1cca03016f9f83df",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "goal",
                         "in": "path",
+                        "description": "ID of goal",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -239,7 +555,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Success",
+                        "description": "Goal details",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -247,6 +563,9 @@
                                 }
                             }
                         }
+                    },
+                    "404": {
+                        "description": "Goal not found"
                     }
                 }
             },
@@ -254,11 +573,11 @@
                 "tags": [
                     "Goals"
                 ],
-                "summary": "Maqsadni yangilash",
-                "operationId": "8038939afa51735859d9313e9715c2d9",
+                "summary": "Update a goal",
+                "operationId": "8284bcf9d28f8c08d4beda6869d5cb78",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "goal",
                         "in": "path",
                         "required": true,
                         "schema": {
@@ -271,14 +590,14 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/GoalResource"
+                                "$ref": "#/components/schemas/GoalUpdate"
                             }
                         }
                     }
                 },
                 "responses": {
                     "200": {
-                        "description": "Goal updated",
+                        "description": "Updated goal",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -293,11 +612,11 @@
                 "tags": [
                     "Goals"
                 ],
-                "summary": "Maqsadni o‘chirish",
-                "operationId": "cce7ceea160eb8cdbc28e6c3e1adbf20",
+                "summary": "Delete a goal",
+                "operationId": "0f7f125ae930572f80815853318ea875",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "goal",
                         "in": "path",
                         "required": true,
                         "schema": {
@@ -307,87 +626,91 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Goal deleted"
-                    }
-                }
-            }
-        },
-        "/api/auth/transactions": {
-            "get": {
-                "tags": [
-                    "Transactions"
-                ],
-                "summary": "List all transactions for the authenticated user",
-                "operationId": "a209e8cb771275bfee07b4234912bd12",
-                "responses": {
-                    "200": {
-                        "description": "Successful list retrieval",
+                        "description": "Goal deleted",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "data": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/components/schemas/TransactionResource"
-                                            }
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Goal deleted successfully"
                                         }
                                     },
                                     "type": "object"
                                 }
                             }
                         }
+                    },
+                    "404": {
+                        "description": "Goal not found"
                     }
-                },
-                "security": [
-                    {
-                        "sanctum": []
+                }
+            }
+        },
+        "/api/transactions": {
+            "get": {
+                "tags": [
+                    "Transactions"
+                ],
+                "summary": "Get all transactions",
+                "operationId": "9b50e29e364179ebde24ac5fc59cd442",
+                "responses": {
+                    "200": {
+                        "description": "List of transactions",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Transaction"
+                                    }
+                                }
+                            }
+                        }
                     }
-                ]
+                }
             },
             "post": {
                 "tags": [
                     "Transactions"
                 ],
                 "summary": "Create a new transaction",
-                "operationId": "c59c9739c7be7e132a40e59763a1bdbb",
+                "operationId": "54eaa3952808f639d46f969f4c8b98c5",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/TransactionRequest"
+                                "$ref": "#/components/schemas/TransactionCreate"
                             }
                         }
                     }
                 },
                 "responses": {
                     "201": {
-                        "description": "Transaction created successfully"
-                    },
-                    "422": {
-                        "description": "Validation error"
+                        "description": "Transaction created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Transaction"
+                                }
+                            }
+                        }
                     }
-                },
-                "security": [
-                    {
-                        "sanctum": []
-                    }
-                ]
+                }
             }
         },
-        "/api/auth/transactions/{id}": {
+        "/api/transactions/{transaction}": {
             "get": {
                 "tags": [
                     "Transactions"
                 ],
-                "summary": "Show a single transaction by ID",
-                "operationId": "b25236efb31420fdcad91cdfbd80170b",
+                "summary": "Get a single transaction",
+                "operationId": "846b687ea89d64602c002df14e07b802",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "transaction",
                         "in": "path",
-                        "description": "Transaction ID",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -396,36 +719,30 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Transaction found",
+                        "description": "Transaction details",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/TransactionResource"
+                                    "$ref": "#/components/schemas/Transaction"
                                 }
                             }
                         }
                     },
-                    "403": {
-                        "description": "Access denied"
+                    "404": {
+                        "description": "Transaction not found"
                     }
-                },
-                "security": [
-                    {
-                        "sanctum": []
-                    }
-                ]
+                }
             },
             "put": {
                 "tags": [
                     "Transactions"
                 ],
                 "summary": "Update a transaction",
-                "operationId": "f7e2df3f097285db9fd148ca6d888a9b",
+                "operationId": "df36b362db8d9d4b25b5c8a24053a8a2",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "transaction",
                         "in": "path",
-                        "description": "Transaction ID",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -437,36 +754,34 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/UpdateTransactionRequest"
+                                "$ref": "#/components/schemas/TransactionUpdate"
                             }
                         }
                     }
                 },
                 "responses": {
                     "200": {
-                        "description": "Transaction updated successfully"
-                    },
-                    "403": {
-                        "description": "Access denied"
+                        "description": "Updated transaction",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Transaction"
+                                }
+                            }
+                        }
                     }
-                },
-                "security": [
-                    {
-                        "sanctum": []
-                    }
-                ]
+                }
             },
             "delete": {
                 "tags": [
                     "Transactions"
                 ],
                 "summary": "Delete a transaction",
-                "operationId": "4291dc8d84bce29d87ec700e018a3ae3",
+                "operationId": "cdb3a161edf4b91189ecc95d452d98eb",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "transaction",
                         "in": "path",
-                        "description": "Transaction ID",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -475,17 +790,25 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Transaction deleted successfully"
+                        "description": "Transaction deleted",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Transaction deleted successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
-                    "403": {
-                        "description": "Access denied"
+                    "404": {
+                        "description": "Transaction not found"
                     }
-                },
-                "security": [
-                    {
-                        "sanctum": []
-                    }
-                ]
+                }
             }
         }
     },
@@ -556,130 +879,212 @@
                 },
                 "type": "object"
             },
-            "TransactionRequest": {
+            "Category": {
+                "title": "Category",
                 "required": [
-                    "category",
-                    "amount",
-                    "type",
-                    "date"
+                    "id",
+                    "user_id",
+                    "name"
                 ],
-                "properties": {
-                    "user_id": {
-                        "description": "User ID (authenticated user)",
-                        "type": "integer",
-                        "example": 1
-                    },
-                    "goal_id": {
-                        "description": "Related goal ID (optional)",
-                        "type": "integer",
-                        "example": 5,
-                        "nullable": true
-                    },
-                    "category": {
-                        "description": "Transaction category name",
-                        "type": "string",
-                        "example": "maqsad"
-                    },
-                    "amount": {
-                        "description": "Transaction amount",
-                        "type": "number",
-                        "format": "float",
-                        "example": 25.5
-                    },
-                    "type": {
-                        "description": "Transaction type",
-                        "type": "string",
-                        "enum": [
-                            "income",
-                            "expense"
-                        ],
-                        "example": "expense"
-                    },
-                    "note": {
-                        "description": "Additional note",
-                        "type": "string",
-                        "example": "Lunch payment",
-                        "nullable": true
-                    },
-                    "date": {
-                        "description": "Transaction date",
-                        "type": "string",
-                        "format": "date",
-                        "example": "2025-10-29"
-                    }
-                },
-                "type": "object"
-            },
-            "UpdateTransactionRequest": {
-                "required": [
-                    "category",
-                    "amount",
-                    "type",
-                    "date"
-                ],
-                "properties": {
-                    "goal_id": {
-                        "description": "Related goal ID (optional)",
-                        "type": "integer",
-                        "example": 5,
-                        "nullable": true
-                    },
-                    "category": {
-                        "description": "Updated transaction category",
-                        "type": "string",
-                        "example": "Utilities"
-                    },
-                    "amount": {
-                        "description": "Updated transaction amount",
-                        "type": "number",
-                        "format": "float",
-                        "example": 45
-                    },
-                    "type": {
-                        "description": "Updated transaction type",
-                        "type": "string",
-                        "enum": [
-                            "income",
-                            "expense"
-                        ],
-                        "example": "expense"
-                    },
-                    "note": {
-                        "description": "Updated note",
-                        "type": "string",
-                        "example": "Electricity bill",
-                        "nullable": true
-                    },
-                    "date": {
-                        "description": "Updated transaction date",
-                        "type": "string",
-                        "format": "date",
-                        "example": "2025-10-29"
-                    }
-                },
-                "type": "object"
-            },
-            "GoalResource": {
-                "title": "Goal Resource",
-                "description": "User goal (financial target) representation",
                 "properties": {
                     "id": {
                         "type": "integer",
                         "example": 1
                     },
+                    "user_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Uyga"
+                    },
+                    "is_active": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "CategoryCreate": {
+                "required": [
+                    "name"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "Uyga"
+                    },
+                    "is_active": {
+                        "type": "boolean",
+                        "example": true
+                    }
+                },
+                "type": "object"
+            },
+            "CategoryUpdate": {
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "Uyga"
+                    },
+                    "is_active": {
+                        "type": "boolean",
+                        "example": true
+                    }
+                },
+                "type": "object"
+            },
+            "DebtResource": {
+                "title": "Debt",
+                "required": [
+                    "id",
+                    "user_id",
+                    "creditor",
+                    "amount",
+                    "due_date"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "user_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "creditor": {
+                        "type": "string",
+                        "example": "Ali aka"
+                    },
+                    "amount": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 500000
+                    },
+                    "due_date": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2025-11-30"
+                    },
+                    "is_active": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "category": {
+                        "$ref": "#/components/schemas/Category"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "DebtCreate": {
+                "required": [
+                    "creditor",
+                    "amount",
+                    "due_date"
+                ],
+                "properties": {
+                    "creditor": {
+                        "type": "string",
+                        "example": "Ali aka"
+                    },
+                    "amount": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 500000
+                    },
+                    "due_date": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2025-11-30"
+                    },
+                    "is_active": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "category_id": {
+                        "type": "integer",
+                        "example": 3
+                    }
+                },
+                "type": "object"
+            },
+            "DebtUpdate": {
+                "properties": {
+                    "creditor": {
+                        "type": "string",
+                        "example": "Ali aka"
+                    },
+                    "amount": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 500000
+                    },
+                    "due_date": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2025-11-30"
+                    },
+                    "is_active": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "category_id": {
+                        "type": "integer",
+                        "example": 3
+                    }
+                },
+                "type": "object"
+            },
+            "GoalResource": {
+                "title": "Goal",
+                "required": [
+                    "id",
+                    "user_id",
+                    "title",
+                    "target_amount"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "user_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "category": {
+                        "$ref": "#/components/schemas/Category"
+                    },
                     "title": {
                         "type": "string",
-                        "example": "Uy uchun jamg‘arma"
+                        "example": "Umra uchun tejash!"
                     },
                     "target_amount": {
                         "type": "number",
                         "format": "float",
-                        "example": 10000
+                        "example": 15000000
                     },
                     "current_amount": {
                         "type": "number",
                         "format": "float",
-                        "example": 2500
+                        "example": 250000
                     },
                     "deadline": {
                         "type": "string",
@@ -690,95 +1095,199 @@
                         "type": "boolean",
                         "example": true
                     },
-                    "user": {
-                        "properties": {
-                            "id": {
-                                "type": "integer",
-                                "example": 3
-                            },
-                            "name": {
-                                "type": "string",
-                                "example": "Navruzbek Ashurov"
-                            },
-                            "email": {
-                                "type": "string",
-                                "example": "navruz@example.com"
-                            }
-                        },
-                        "type": "object"
-                    },
                     "created_at": {
                         "type": "string",
-                        "format": "date-time",
-                        "example": "2025-10-30 14:25:00"
+                        "format": "date-time"
                     },
                     "updated_at": {
                         "type": "string",
-                        "format": "date-time",
-                        "example": "2025-10-30 15:10:00"
+                        "format": "date-time"
                     }
                 },
                 "type": "object"
             },
-            "TransactionResource": {
-                "title": "Transaction Resource",
+            "GoalCreate": {
+                "required": [
+                    "title",
+                    "target_amount",
+                    "deadline"
+                ],
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "example": "Umra uchun tejash!"
+                    },
+                    "target_amount": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 15000000
+                    },
+                    "current_amount": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 0
+                    },
+                    "deadline": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2025-12-31"
+                    },
+                    "is_active": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "category_id": {
+                        "type": "integer",
+                        "example": 1
+                    }
+                },
+                "type": "object"
+            },
+            "GoalUpdate": {
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "example": "Umra uchun tejash!"
+                    },
+                    "target_amount": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 15000000
+                    },
+                    "current_amount": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 250000
+                    },
+                    "deadline": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2025-12-31"
+                    },
+                    "is_active": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "category_id": {
+                        "type": "integer",
+                        "example": 1
+                    }
+                },
+                "type": "object"
+            },
+            "Transaction": {
+                "required": [
+                    "id",
+                    "user_id",
+                    "amount",
+                    "type"
+                ],
                 "properties": {
                     "id": {
                         "type": "integer",
                         "example": 1
                     },
-                    "goal_id": {
+                    "user_id": {
                         "type": "integer",
                         "example": 1
-                    },
-                    "category": {
-                        "type": "string",
-                        "example": "Food"
                     },
                     "amount": {
                         "type": "number",
                         "format": "float",
-                        "example": 125.5
+                        "example": 50000
                     },
                     "type": {
                         "type": "string",
-                        "example": "expense"
+                        "example": "income"
                     },
                     "note": {
                         "type": "string",
-                        "example": "Lunch at cafe"
+                        "example": "Some note"
                     },
                     "date": {
                         "type": "string",
                         "format": "date",
-                        "example": "2025-10-29"
+                        "example": "2025-11-06"
                     },
-                    "user": {
-                        "properties": {
-                            "id": {
-                                "type": "integer",
-                                "example": 2
-                            },
-                            "name": {
-                                "type": "string",
-                                "example": "Ali Valiyev"
-                            },
-                            "email": {
-                                "type": "string",
-                                "example": "ali@example.com"
-                            }
-                        },
+                    "category": {
+                        "$ref": "#/components/schemas/Category"
+                    },
+                    "entity": {
                         "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "TransactionCreate": {
+                "required": [
+                    "amount",
+                    "type"
+                ],
+                "properties": {
+                    "amount": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 50000
                     },
-                    "created_at": {
+                    "type": {
                         "type": "string",
-                        "format": "date-time",
-                        "example": "2025-10-29 12:45:30"
+                        "example": "income"
                     },
-                    "updated_at": {
+                    "note": {
                         "type": "string",
-                        "format": "date-time",
-                        "example": "2025-10-29 12:50:10"
+                        "example": "Some note"
+                    },
+                    "date": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2025-11-06"
+                    },
+                    "category_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "entity_type": {
+                        "type": "string",
+                        "example": "App\\\\Models\\\\Goal"
+                    },
+                    "entity_id": {
+                        "type": "integer",
+                        "example": 1
+                    }
+                },
+                "type": "object"
+            },
+            "TransactionUpdate": {
+                "properties": {
+                    "amount": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 50000
+                    },
+                    "type": {
+                        "type": "string",
+                        "example": "income"
+                    },
+                    "note": {
+                        "type": "string",
+                        "example": "Some note"
+                    },
+                    "date": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2025-11-06"
+                    },
+                    "category_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "entity_type": {
+                        "type": "string",
+                        "example": "App\\\\Models\\\\Goal"
+                    },
+                    "entity_id": {
+                        "type": "integer",
+                        "example": 1
                     }
                 },
                 "type": "object"
@@ -786,6 +1295,14 @@
         }
     },
     "tags": [
+        {
+            "name": "Categories",
+            "description": "API endpoints for managing categories"
+        },
+        {
+            "name": "Debts",
+            "description": "API Endpoints for managing debts"
+        },
         {
             "name": "Auth",
             "description": "Auth"
