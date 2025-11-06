@@ -23,7 +23,6 @@ class UpdateCategoryRequest extends FormRequest
     {
         return [
             'name' => ['sometimes', 'string', 'max:255'],
-            'type' => ['sometimes', 'in:income,expense'],
             'is_active' => ['sometimes', 'boolean'],
         ];
     }

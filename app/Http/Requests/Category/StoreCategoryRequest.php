@@ -23,7 +23,6 @@ class StoreCategoryRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'type' => ['required', 'in:income,expense'],
             'is_active' => ['boolean'],
         ];
     }

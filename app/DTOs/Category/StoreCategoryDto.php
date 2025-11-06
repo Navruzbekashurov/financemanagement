@@ -7,17 +7,17 @@ use Illuminate\Http\Request;
 class StoreCategoryDto
 {
     public function __construct(
+        public int $user_id,
         public string $name,
-        public string $type,
         public bool $is_active = true
     ) {}
 
     public static function fromRequest(Request $request): self
     {
         return new self(
+            user_id: 0,
             name: $request->input('name'),
-            type: $request->input('type', 'expense'),
-            is_active: $request->boolean('is_active', true)
+            is_active: $request->boolean('is_active', true),
         );
     }
 }

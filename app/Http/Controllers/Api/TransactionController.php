@@ -10,6 +10,7 @@ use App\DTOs\Transaction\StoreTransactionDto;
 use App\DTOs\Transaction\UpdateTransactionDto;
 use App\Services\TransactionService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 
 class TransactionController extends Controller
 {
@@ -23,6 +24,8 @@ class TransactionController extends Controller
     public function store(StoreTransactionRequest $request): JsonResponse
     {
         $dto = StoreTransactionDto::fromRequest($request);
+        $dto->user_id = Auth::id();
+
         $transaction = $this->transactionService->create($dto);
         return response()->json($transaction, 201);
     }

@@ -22,7 +22,6 @@ class StoreTransactionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => ['required', 'exists:users,id'],
             'category_id' => ['nullable', 'exists:categories,id'],
             'amount' => ['required', 'numeric', 'min:0'],
             'type' => ['required', 'in:income,expense'],
@@ -31,7 +30,20 @@ class StoreTransactionRequest extends FormRequest
 
             // Polymorphic fields
             'entity_id' => ['nullable', 'integer'],
-            'entity_type' => ['nullable', 'string', 'in:App\Models\Goal,App\Models\Debt'],
+            'entity_type' => [
+                'nullable',
+                function ($attribute, $value, $fail) {
+                    $allowedModels = [
+                        \App\Models\Goal::class,
+                        \App\Models\Category::class,
+                        \App\Models\User::class,
+                    ];
+
+                    if (!in_array($value, $allowedModels)) {
+                        $fail("The selected $attribute is invalid.");
+                    }
+                }
+            ]
 
         ];
     }

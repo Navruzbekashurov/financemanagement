@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\GoalResource;
 use App\Models\Goal;
 use App\Http\Requests\Goal\StoreGoalRequest;
 use App\Http\Requests\Goal\UpdateGoalRequest;
@@ -10,6 +11,7 @@ use App\DTOs\Goal\StoreGoalDto;
 use App\DTOs\Goal\UpdateGoalDto;
 use App\Services\GoalService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 
 class GoalController extends Controller
 {
@@ -20,12 +22,16 @@ class GoalController extends Controller
         return response()->json(Goal::with('category')->latest()->get());
     }
 
-    public function store(StoreGoalRequest $request): JsonResponse
+
+    public function store(StoreGoalRequest $request)
     {
         $dto = StoreGoalDto::fromRequest($request);
+        $dto->user_id = Auth::id();
+
         $goal = $this->goalService->create($dto);
-        return response()->json($goal, 201);
+        return new GoalResource($goal);
     }
+
 
     public function show(Goal $goal): JsonResponse
     {

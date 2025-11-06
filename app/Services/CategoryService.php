@@ -11,17 +11,17 @@ class CategoryService
     public function create(StoreCategoryDto $dto): Category
     {
         return Category::create([
+            'user_id' => $dto->user_id,
             'name' => $dto->name,
-            'type' => $dto->type,
             'is_active' => $dto->is_active ?? true,
         ]);
     }
+
 
     public function update(Category $category, UpdateCategoryDto $dto): Category
     {
         $category->update([
             'name' => $dto->name,
-            'type' => $dto->type,
             'is_active' => $dto->is_active,
         ]);
 

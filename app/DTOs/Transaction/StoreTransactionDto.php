@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 class StoreTransactionDto
 {
     public function __construct(
-        public int $user_id,
+        public ?int $user_id,
         public ?int $category_id,
         public float $amount,
         public string $type,
@@ -20,7 +20,7 @@ class StoreTransactionDto
     public static function fromRequest(Request $request): self
     {
         return new self(
-            user_id: $request->integer('user_id'),
+            user_id:null,
             category_id: $request->input('category_id'),
             amount: $request->float('amount'),
             type: $request->input('type', 'expense'),

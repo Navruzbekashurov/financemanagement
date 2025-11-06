@@ -10,6 +10,7 @@ use App\DTOs\Category\StoreCategoryDto;
 use App\DTOs\Category\UpdateCategoryDto;
 use App\Services\CategoryService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -23,7 +24,10 @@ class CategoryController extends Controller
     public function store(StoreCategoryRequest $request): JsonResponse
     {
         $dto = StoreCategoryDto::fromRequest($request);
+        $dto->user_id = Auth::id();
+
         $category = $this->categoryService->create($dto);
+
         return response()->json($category, 201);
     }
 

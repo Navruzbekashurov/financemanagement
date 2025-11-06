@@ -14,16 +14,15 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('goal_id')->nullable()->constrained()->nullOnDelete();
             $table->decimal('amount',12,2);
             $table->enum('type',['income','expense'])->default('expense');
             $table->string('note')->nullable();
             $table->date('date');
 
-            // Polymorphic category relation
-            $table->unsignedBigInteger('category_id')->nullable();
-            $table->string('category_type')->nullable();
-            $table->index(['category_id','category_type']);
+            // Polymorphic relation for any entity (Goal, Category, Debt)
+            $table->unsignedBigInteger('entity_id')->nullable();
+            $table->string('entity_type')->nullable();
+            $table->index(['entity_id','entity_type']);
 
             $table->timestamps();
         });

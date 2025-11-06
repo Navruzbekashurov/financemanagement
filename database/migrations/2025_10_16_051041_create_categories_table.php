@@ -13,11 +13,19 @@ return new class extends Migration {
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->default('Shaxsiy');
-            $table->enum('type', ['income','expense'])->default('expense');
+            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
+            $table->string('name');
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
+
+        DB::table('categories')->insert([
+            'id' => 1,
+            'name' => 'Shaxsiy',
+            'is_active' => true,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
 
     }
 

@@ -18,8 +18,14 @@ class TransactionService
             'date' => $dto->date,
         ]);
 
-        if ($dto->entity) {
-            $transaction->entity()->associate($dto->entity);
+        // Polimorfik entity bog'lash
+        if ($dto->entity_id && $dto->entity_type) {
+            $entityClass = $dto->entity_type; // App\Models\Goal yoki App\Models\Category
+            $entity = $entityClass::find($dto->entity_id);
+
+            if ($entity) {
+                $transaction->entity()->associate($entity);
+            }
         }
 
         $transaction->save();
