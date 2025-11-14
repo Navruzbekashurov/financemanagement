@@ -26,7 +26,7 @@ class DebtController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/debts",
+     *     path="/api/auth/debts",
      *     summary="Get all debts",
      *     tags={"Debts"},
      *     @OA\Response(
@@ -43,7 +43,7 @@ class DebtController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/api/debts",
+     *     path="/api/auth/debts",
      *     summary="Create a new debt",
      *     tags={"Debts"},
      *     @OA\RequestBody(
@@ -68,7 +68,7 @@ class DebtController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/debts/{id}",
+     *     path="/api/auth/debts/{id}",
      *     summary="Get a single debt",
      *     tags={"Debts"},
      *     @OA\Parameter(
@@ -92,7 +92,7 @@ class DebtController extends Controller
 
     /**
      * @OA\Put(
-     *     path="/api/debts/{id}",
+     *     path="/api/auth/debts/{id}",
      *     summary="Update a debt",
      *     tags={"Debts"},
      *     @OA\Parameter(
@@ -124,7 +124,7 @@ class DebtController extends Controller
 
     /**
      * @OA\Delete(
-     *     path="/api/debts/{id}",
+     *     path="/api/auth/debts/{id}",
      *     summary="Delete a debt",
      *     tags={"Debts"},
      *     @OA\Parameter(

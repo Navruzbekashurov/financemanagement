@@ -22,7 +22,9 @@ use OpenApi\Annotations as OA;
  */
 class CategoryController extends Controller
 {
-    public function __construct(protected CategoryService $categoryService) {}
+    public function __construct(protected CategoryService $categoryService)
+    {
+    }
 
     /**
      * @OA\Get(
@@ -47,7 +49,7 @@ class CategoryController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/api/categories",
+     *     path="/api/auth/categories",
      *     summary="Create a new category",
      *     tags={"Categories"},
      *     @OA\RequestBody(
@@ -73,7 +75,7 @@ class CategoryController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/categories/{id}",
+     *     path="/api/auth/categories/{id}",
      *     summary="Get a single category",
      *     tags={"Categories"},
      *     @OA\Parameter(
@@ -96,7 +98,7 @@ class CategoryController extends Controller
 
     /**
      * @OA\Put(
-     *     path="/api/categories/{id}",
+     *     path="/api/auth/categories/{id}",
      *     summary="Update a category",
      *     tags={"Categories"},
      *     @OA\Parameter(
@@ -128,7 +130,7 @@ class CategoryController extends Controller
 
     /**
      * @OA\Delete(
-     *     path="/api/categories/{id}",
+     *     path="/api/auth/categories/{id}",
      *     summary="Delete a category",
      *     tags={"Categories"},
      *     @OA\Parameter(

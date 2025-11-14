@@ -192,13 +192,15 @@
                         }
                     }
                 }
-            },
+            }
+        },
+        "/api/auth/categories": {
             "post": {
                 "tags": [
                     "Categories"
                 ],
                 "summary": "Create a new category",
-                "operationId": "cca49a87d9b0ebb9a98ad7c154b71737",
+                "operationId": "3a15e1af1a5c0e41d2737cb60b335c76",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -1291,6 +1293,13 @@
                     }
                 },
                 "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "BearerToken": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
             }
         }
     },

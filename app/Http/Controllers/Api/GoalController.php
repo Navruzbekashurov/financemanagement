@@ -37,7 +37,7 @@ class GoalController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/api/goals",
+     *     path="/api/auth/goals",
      *     summary="Create a new goal",
      *     tags={"Goals"},
      *     @OA\RequestBody(
@@ -62,7 +62,7 @@ class GoalController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/goals/{goal}",
+     *     path="/api/auth/goals/{goal}",
      *     summary="Get a single goal",
      *     tags={"Goals"},
      *     @OA\Parameter(
@@ -87,7 +87,7 @@ class GoalController extends Controller
 
     /**
      * @OA\Put(
-     *     path="/api/goals/{goal}",
+     *     path="/api/auth/goals/{goal}",
      *     summary="Update a goal",
      *     tags={"Goals"},
      *     @OA\Parameter(
@@ -118,7 +118,7 @@ class GoalController extends Controller
 
     /**
      * @OA\Delete(
-     *     path="/api/goals/{goal}",
+     *     path="/api/auth/goals/{goal}",
      *     summary="Delete a goal",
      *     tags={"Goals"},
      *     @OA\Parameter(
