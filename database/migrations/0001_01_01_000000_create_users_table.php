@@ -14,11 +14,19 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('phone')->nullable()->unique();
             $table->string('email')->unique();
             $table->string('password')->nullable();
             $table->string('timezone')->default('Asia/Tashkent');
             $table->string('preferred_language',10)->default('uz');
             $table->rememberToken();
+
+
+            $table->string('phone_verification_code')->nullable();
+            $table->timestamp('phone_verification_sent_at')->nullable();
+            $table->boolean('phone_verified')->default(false);
+            $table->integer('phone_attempts')->default(0);
+
             $table->timestamps();
         });
 
